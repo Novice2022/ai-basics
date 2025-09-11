@@ -1,0 +1,9 @@
+FROM node:24.8
+
+RUN mkdir workspace
+
+USER node
+
+WORKDIR /workspace
+
+EXPOSE 5173
