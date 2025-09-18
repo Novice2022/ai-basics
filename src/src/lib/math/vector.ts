@@ -1,24 +1,24 @@
 export class Vector<T = number> {
-    private body: T[];
+    private _body: T[];
 
     constructor (value: T[]) {
         if (value.length === 0) {
             throw new Error('Empty vectors aren\'t supported');
         }
 
-        this.body = value;
+        this._body = value;
     }
 
     public at(id: number): T {
-        if (id < 0 || id > this.body.length) {
-            throw new Error(`Index out of range (got ${ id }, vector length is ${ this.body.length })`);
+        if (id < 0 || id > this._body.length) {
+            throw new Error(`Index out of range (got ${ id }, vector length is ${ this._body.length })`);
         }
 
-        return this.body[id];
+        return this._body[id];
     }
     
     public get length() : number {
-        return this.body.length;
+        return this._body.length;
     }
 
     public multiplyScalar(other: Vector): Vector {
@@ -26,7 +26,7 @@ export class Vector<T = number> {
             throw new Error(`Different vectors' lengths: ${ this.length } and ${ other.length }`);
         }
 
-        if (! (this.body[0] instanceof Number)) {
+        if (! (this._body[0] instanceof Number)) {
             throw new Error('Scalar multiplication for vectors contains not numbers is not supported');
         }
 
@@ -39,11 +39,3 @@ export class Vector<T = number> {
         return new Vector(newValue);
     }
 }
-
-// export default class Matrix {
-//     private body: Vector | Vector<Vector>;
-
-//     constructor (value: Vector | Vector<Vector>) {
-//         this.body = value;
-//     }
-// }
