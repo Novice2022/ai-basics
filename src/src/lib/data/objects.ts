@@ -22,18 +22,34 @@ const generateParameter = (
 
 
 export interface IParameterizedObject {
-    parameters: Vector<IParameter>;
+    parameters: IParameter[];
+    getCoefficients(): Vector;
+    toString(): string;
 }
 
 class ParameterizedObject implements IParameterizedObject {
-    parameters: Vector<IParameter>;
+    parameters: IParameter[];
 
-    constructor(parameters: Vector<IParameter>) {
+    constructor(parameters: IParameter[]) {
         this.parameters = parameters;
+    }
+
+    toString(): string {
+        return this.parameters.toString();
+    }
+
+    getCoefficients(): Vector {
+        const values: number[] = [];
+
+        this.parameters.forEach(param => {
+            values.push(param.value);
+        });
+
+        return new Vector(values);
     }
 }
 
-export class Pen extends ParameterizedObject{
+export class Pen extends ParameterizedObject {
     constructor() {
         const lengthParameterDefinition: IParameterGenerationDefinition = {
             standard: 25,
@@ -45,12 +61,10 @@ export class Pen extends ParameterizedObject{
             inaccuracy: 1
         }
 
-        const parameters = new Vector<IParameter>([
+        super([
             generateParameter('length', lengthParameterDefinition),
             generateParameter('diameter', diameterParameterDefinition)
         ]);
-
-        super(parameters);
     }
 }
 
@@ -66,11 +80,9 @@ export class Cilinder extends ParameterizedObject {
             inaccuracy: 13
         }
 
-        const parameters = new Vector<IParameter>([
+        super([
             generateParameter('length', lengthParameterDefinition),
             generateParameter('diameter', diameterParameterDefinition)
         ]);
-
-        super(parameters);
     }
 }
